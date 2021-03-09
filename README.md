@@ -1,3 +1,4 @@
 # Mine-Field
 
-Initial Commit – Josh
+Initial Commit – Josh, Ethan
+
