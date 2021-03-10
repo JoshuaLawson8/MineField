@@ -1,11 +1,29 @@
 package mvc;
+/* Edit history
+   class made my Jesse 3/10
+ */
+public abstract class Model {
 
-public class Model {
+    private boolean unsavedChanges = false;
+    private String fileName = null;
 
+    public boolean getUnsavedChanges() {
+        return unsavedChanges;
+    }
 
-    //todo
-    public boolean getUnsavedChanges() {return false;}
-    public String getFileName() {return null;}
-    public void setUnsavedChanges(boolean b) {}
-    public void setFileName(String fName) {}
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setUnsavedChanges(boolean b) {
+        unsavedChanges = b;
+    }
+    public void setFileName(String fName) {
+        fileName = fName;
+    }
+
+    public void changed(){
+        unsavedChanges = true;
+        firePropertyChange("changed", false, unsavedChanges);
+    }
 }
