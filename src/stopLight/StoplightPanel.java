@@ -1,7 +1,8 @@
 package stopLight;
 
-import java.awt.*;
 import javax.swing.*;
+
+import mvc.AppPanel;
 
 import mvc.*;
 

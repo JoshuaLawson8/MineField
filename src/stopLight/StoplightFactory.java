@@ -1,6 +1,7 @@
 package stopLight;
 
 import mvc.*;
+import mvc.Model;
 
 public class StoplightFactory implements AppFactory {
 

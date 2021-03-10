@@ -1,6 +1,7 @@
 package stopLight;
 
-import mvc.*;
+import mvc.Model;
+
 import java.awt.Color;
 
 public class Stoplight extends Model {

@@ -1,4 +1,6 @@
-package mvc;
+package tools;
+
+import mvc.Model;
 
 import java.awt.event.*;
 import java.io.*;
