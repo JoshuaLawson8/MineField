@@ -2,7 +2,9 @@ package mvc;
 /* Edit history
    class made my Jesse 3/10
  */
-public abstract class Model {
+import tools.Bean;
+
+public abstract class Model extends Bean{
 
     private boolean unsavedChanges = false;
     private String fileName = null;
