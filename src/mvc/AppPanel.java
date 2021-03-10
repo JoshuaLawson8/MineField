@@ -9,8 +9,9 @@ import java.beans.*;
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
 
     private View view;
-    private ControlPanel control;
-    //
+    private Model model;
+    private AppFactory af;
+
     public static void main(String[] args){
         System.out.println("It's working!");
     }
