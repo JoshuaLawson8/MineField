@@ -8,7 +8,9 @@ public class View extends JPanel implements PropertyChangeListener {
 
 
     private Model model;
-
+    public View(Model model){
+        this.model = model;
+    }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 

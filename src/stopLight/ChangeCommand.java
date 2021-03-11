@@ -1,6 +1,7 @@
 package stopLight;
 
 import mvc.Model;
+import mvc.Command;
 
 public class ChangeCommand extends Command {
 
