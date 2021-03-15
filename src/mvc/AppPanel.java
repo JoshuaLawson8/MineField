@@ -46,8 +46,8 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         frame.setJMenuBar(createMenuBar());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle(af.getTitle());
-        frame.setLocationRelativeTo(null);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setLocationRelativeTo(null);
     }
 
     protected JMenuBar createMenuBar() {
