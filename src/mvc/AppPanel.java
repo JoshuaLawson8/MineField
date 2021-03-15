@@ -12,6 +12,10 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
     private Model model;
     private AppFactory af;
 
+    public AppPanel(AppFactory af){
+        this.af = af;
+    }
+
     public static void main(String[] args){
         System.out.println("It's working!");
     }
