@@ -1,7 +1,5 @@
 package mvc;
 
-import stopLight.Stoplight;
-import stopLight.StoplightFactory;
 import tools.Utilities;
 
 import java.awt.*;
@@ -13,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.*;
-
+//aaaa
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
 
     private Model model;
