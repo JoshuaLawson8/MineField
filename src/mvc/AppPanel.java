@@ -16,20 +16,19 @@ import javax.swing.*;
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
 
     private Model model;
-    AppFactory af;
     private View view;
+    AppFactory af;
     private JFrame frame;
-    public JPanel controlPanel;
+    protected JPanel controlPanel;
     public static int FRAME_WIDTH = 500;
     public static int FRAME_HEIGHT = 300;
     public AppPanel(AppFactory factory) {
         controlPanel = new JPanel();
 
         af = factory;
-
-        af.makeView(af.makeModel());
+        model = af.makeModel();
+        view = af.makeView(model);
         JPanel controlPanel = new JPanel();
-        view = new View(model);
 
         setLayout((new GridLayout(1, 2)));
         add(controlPanel);
