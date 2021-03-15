@@ -6,13 +6,15 @@ import mvc.AppPanel;
 
 import mvc.*;
 
+import java.awt.*;
+
 
 public class StoplightPanel extends AppPanel {
     private JButton change;
     public StoplightPanel(AppFactory factory) {
         super(factory);
 
-        //this.setLayout(new BorderLayout());
+       // this.setLayout(new BorderLayout());
         change = new JButton("Change");
         change.addActionListener(this);
         //JPanel buttonPanel = new JPanel();

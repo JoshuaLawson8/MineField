@@ -28,7 +28,6 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         af = factory;
         model = af.makeModel();
         view = af.makeView(model);
-        JPanel controlPanel = new JPanel();
 
         setLayout((new GridLayout(1, 2)));
         add(controlPanel);
