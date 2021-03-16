@@ -1,7 +1,5 @@
 package mvc;
-/* Edit history
-   class made my Jesse 3/10
- */
+
 import tools.Bean;
 
 public abstract class Model extends Bean{
@@ -25,7 +23,9 @@ public abstract class Model extends Bean{
     }
 
     public void changed(){
+        boolean oldStatus = unsavedChanges;
         unsavedChanges = true;
-        firePropertyChange("changed", false, unsavedChanges);
+        firePropertyChange("changed", oldStatus, unsavedChanges);
+        //System.out.println(oldStatus + "new: " + unsavedChanges);
     }
 }

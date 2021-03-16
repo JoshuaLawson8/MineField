@@ -16,5 +16,6 @@ public class StoplightView extends View {
         gc.setColor(light.getColor());
         gc.fillOval(100, 100, 20, 20);
         gc.setColor(oldColor);
+        //System.out.println("Drawing");
     }
 }

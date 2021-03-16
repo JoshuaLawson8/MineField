@@ -17,9 +17,10 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 
     private Model model;
     private View view;
-    AppFactory af;
-    private JFrame frame;
+    private AppFactory af;
     protected JPanel controlPanel;
+
+    private JFrame frame;
     public static int FRAME_WIDTH = 500;
     public static int FRAME_HEIGHT = 300;
     public AppPanel(AppFactory factory) {
@@ -68,74 +69,68 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 
     public void display() { frame.setVisible(true); }
 
-    public void propertyChange(PropertyChangeEvent pe){}
+    public void propertyChange(PropertyChangeEvent pe){
+
+    }
 
     public void actionPerformed(ActionEvent ae) {
         String cmmd = ae.getActionCommand();
-        /*if (cmmd == "Save") {
-            model.setUnsavedChanges(false);
-            try {
+        try {
+            if (cmmd == "Save") {
+                model.setUnsavedChanges(false);
                 //String fName = Utilities.ask("File Name?");
                 String fName = Utilities.getFileName(null, false);
                 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fName));
                 os.writeObject(model);
                 os.close();
-            } catch (Exception err) {
-                Utilities.error(err);
-            }
-        } else if (cmmd == "Open") {
-            if(model.getUnsavedChanges()) {
-                if (!Utilities.confirm("Open without saving?")) {
-                    try {
+            } else if (cmmd == "Open") {
+                if (model.getUnsavedChanges()) {
+                    if (!Utilities.confirm("Open without saving?")) {
                         String fName = Utilities.getFileName(null, true);
                         ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
                         //model.removePropertyChangeListener(this);
-                        model = (Turtle) is.readObject();
+                        model = (Model) is.readObject();
                         //this.model.initSupport();
                         //model.addPropertyChangeListener(this);
-                        view.setModel(model);
+                        view = af.makeView(model);
                         is.close();
-                    } catch (Exception err) {
-                        Utilities.error(err.getMessage());
                     }
-                }
-            } else{
-                try {
+                } else {
                     String fName = Utilities.getFileName(null, true);
                     ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
                     //model.removePropertyChangeListener(this);
-                    model = (Turtle)is.readObject();
+                    model = (Model) is.readObject();
                     //this.model.initSupport();
                     //model.addPropertyChangeListener(this);
-                    view.setModel(model);
+                    view = af.makeView(model);
                     is.close();
-                } catch (Exception err) {
-                    Utilities.error(err.getMessage());
                 }
-            }
-        } else if (cmmd == "New") {
-            model = new Turtle();
-            view.setModel(model);
-        } else if (cmmd == "Quit") {
-            //Utilities.saveChanges(model);
-            if(view.getUnsavedChanges()){
-                if(!Utilities.confirm("Exit without saving?")){
+            } else if (cmmd == "New") {
+                model = af.makeModel();
+                view = af.makeView(model);
+            } else if (cmmd == "Quit") {
+                //Utilities.saveChanges(model);
+                if (model.getUnsavedChanges()) {
+                    if (!Utilities.confirm("Exit without saving?")) {
+                        System.exit(1);
+                    }
+                } else {
                     System.exit(1);
                 }
+            } else if (cmmd == "About") {
+                Utilities.inform(af.about());
+            } else if (cmmd == "Help") {
+                Utilities.inform(af.getHelp());
+            } else {
+                Command command = af.makeEditCommand(model, cmmd);
+                command.execute();
             }
-            else{
-                System.exit(1);
-            }
-
-        } else if (cmmd == "About") {
-            Utilities.inform(view.getAbout());
-        } else if (cmmd == "Help") {
-            Utilities.inform("Click the buttons to move the turtle. \nPen toggles whether or not to draw. \nClear removes the lines\nTo Select a color use the color button");
-        }  else  {
-            Utilities.error("Unrecognized command: " + cmmd);
+        } catch (Exception e) {
+            handleException(e);
         }
-        *
-         */
     }
 
+    protected void handleException(Exception e){
+        Utilities.error(e);
+    }
 }
