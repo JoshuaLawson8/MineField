@@ -3,25 +3,27 @@ package minefield;
 import mvc.*;
 
 public class MinefieldFactory implements AppFactory {
-    public Model makeModel() { return null; }
 
-    public View makeView(Model m) { return null; }
+    public Model makeModel() { return new Minefield(); }
 
-    public String[] getEditCommands() { return null; }
+    public View makeView(Model m) { return new MinefieldView((Minefield)m); }
+
+    public String[] getEditCommands() { return new String[]{"NW","N","NE","W","E","SW","S","SE"}; }
 
     public Command makeEditCommand(Model model, String type) {
-        //if (type == "Change")
-        //    return new ChangeCommand(model);
+        for( String s : getEditCommands()){
+            if (type == s){ return new MineCommand(model,s); }
+        }
         return null;
     }
 
-    public String getTitle() { return ""; }
+    public String getTitle() { return "Minefield on mvc"; }
 
     public String[] getHelp() {
-        return new String[] {""};
+        return new String[] {"Click the buttons to move you in one of eight directions on the minefield"};
     }
 
     public String about() {
-        return "";
+        return "Minefield on mvc version 1.0. Copyright Pending 2021, by JJE Productions ";
     }
 }

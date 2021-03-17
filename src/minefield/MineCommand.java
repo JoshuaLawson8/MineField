@@ -1,14 +1,15 @@
 package minefield;
 
-import mvc.*;
+import mvc.Model;
+import mvc.Command;
 
 public class MineCommand extends Command{
 
-    protected Minefield minefield;
-
-    public MineCommand(Model model){super(model);}
+    public MineCommand(Model model, String s){super(model);}
+    // String s to differentiate between directions? so we dont have to make 8 movecommand classes
     public void execute(){
-
+        Minefield field = (Minefield)model;
+        field.change();
     }
 }
 
