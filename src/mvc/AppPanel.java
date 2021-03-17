@@ -75,6 +75,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 
     public void actionPerformed(ActionEvent ae) {
         String cmmd = ae.getActionCommand();
+
         try {
             if (cmmd == "Save") {
                 model.setUnsavedChanges(false);
@@ -122,8 +123,13 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
             } else if (cmmd == "Help") {
                 Utilities.inform(af.getHelp());
             } else {
-                Command command = af.makeEditCommand(model, cmmd);
-                command.execute();
+
+                for(String s : af.getEditCommands()){
+                    if(cmmd == s){
+                        af.makeEditCommand(model,cmmd).execute();
+                        System.out.println("Change");
+                    }
+                }
             }
         } catch (Exception e) {
             handleException(e);
