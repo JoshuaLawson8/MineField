@@ -20,9 +20,9 @@ public class MinefieldPanel extends AppPanel{
         }
 
         public static void main(String[] args) {
-            //AppFactory factory = new MinefieldFactory();
-            //AppPanel panel = new stopLight.StoplightPanel(factory);
-           // panel.display();
+            AppFactory factory = new MinefieldFactory();
+            AppPanel panel = new MinefieldPanel(factory);
+            panel.display();
         }
 
 }
