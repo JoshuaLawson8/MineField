@@ -4,7 +4,7 @@ import mvc.*;
 
 public class MinefieldFactory implements AppFactory {
 
-    public Model makeModel() { return new Minefield(); }
+    public Model makeModel() { return new Minefield(10); }
 
     public View makeView(Model m) { return new MinefieldView((Minefield)m); }
 

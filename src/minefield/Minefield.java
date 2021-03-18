@@ -5,118 +5,52 @@ import mvc.*;
 import javax.swing.*;
 import java.util.*;
 
-class Square extends JLabel {
-    private boolean hasMine, discovered, isExit; //Whether or not contains mine and whether or not person has stepped on.
-    private int nearMines;
-    public Square(boolean hasMine, boolean discovered, boolean isExit){
-        this.hasMine = hasMine;
-        this.discovered = discovered;
-        this.isExit = isExit;
-    }
-
-    public void setNearbyMines(int nearMines){
-        this.nearMines = nearMines;
-    }
-
-    public int getNearMines(){
-        return nearMines;
-    }
-
-    public String toString(){
-        return "Has Mine: " + hasMine;
-    }
-
-    public boolean hasMine(){
-        return hasMine;
-    }
-
-    public boolean getDiscovered(){
-        return discovered;
-    }
-
-}
 public class Minefield extends Model { //The minefield is a 20x20 grid
 
     private Square[][] minefield;
-    Random rd = new Random();
+    //Random rd = new Random();
 
-    public Minefield(){
+    public Minefield(int Mines){
         minefield = new Square[20][20];
         for(int i=0; i<minefield.length; i++){
             for(int j=0; j<minefield[i].length; j++){
-                if(rd.nextBoolean() == true){
-                    minefield[i][j] = new Square(true,false, false);
-                }
-                else{
-                    minefield[i][j] = new Square(false,false, false);
-                }
+                minefield[i][j] = new Square(false,false, false);
             }
         }
-        minefield[0][0] = new Square(false,true, false); //starter square
-        minefield[19][19] = new Square(false, false, true); //exit square
+        //Generates random x and y coords to put in Mines based on amount of specified mines (in constructor)
+        for(int i = 0; i < Mines; i++){
+            int x = (int)(Math.random() * 20 );
+            int y = (int)(Math.random() * 20 );
+            if(minefield[x][y].hasMine || (x == 0 && y ==0) || (x == 19 && y == 19)){ i--;}
+            else{minefield[x][y].hasMine = true;}
+        }
+        //setting entrance and exit
+        minefield[0][0].discovered = true;
+        minefield[19][19].isExit = true;
     }
 
     public void printAllMines(){
         String txt = "";
         for(int i=0; i<minefield.length; i++){
             for(int j=0; j<minefield[i].length; j++){
-                txt += minefield[i][j].toString() + " ";
+                System.out.print(minefield[i][j].hasMine ? "x " : "o ");
             }
-            txt += "\n";
+            System.out.println("\n");
         }
-        System.out.println(txt);
     }
 
-    public void findNearMines(int i, int j){
+    public void findNearMines(int xPos, int yPos){
         int nearMines = 0;
-        if(i == 0 || i == 19 || j == 0 || j == 19){ //Check Edge squares
-            if(i == 0 && j == 0){ //first square
-                if(minefield[i+1][j].hasMine()){
-                    nearMines++;
-                }
-            }
-            else if(i == 19 && j == 19){ //last square
-
-            }
-            else if(i == 0){
-
-            }
-            else if(i == 19){ //Bottom row
-
-            }
-            else if(j == 0){ //Left column
-
-            }
-            else if(j == 19){ //Right colum
-
+        for(int i = xPos-1; i < xPos+2; i++) {
+            for (int j = yPos - 1; j < yPos + 2; j++) {
+                if (!(i == -1 || j == -1 || i == 20 || j == 20 || (i == xPos && j == yPos)))//check all boarders
+                    nearMines += minefield[i][j].hasMine ? 1 : 0;
             }
         }
-        else{ //Check Middle squares
-            if(minefield[i+1][j].hasMine()){
-                nearMines++;
-            }
-            else if(minefield[i-1][j].hasMine()){
-                nearMines++;
-            }
-            else if(minefield[i][j+1].hasMine()){
-                nearMines++;
-            }
-            else if(minefield[i][j-1].hasMine()){
-                nearMines++;
-            }
-            else if(minefield[i+1][j+1].hasMine()){
-                nearMines++;
-            }
-            else if(minefield[i+1][j+1].hasMine()){
-                nearMines++;
-            }
-        }
-
-        minefield[i][j].setNearbyMines(nearMines);
+        System.out.print(nearMines);
     }
 
-
-
+    //do we ever need minefield?
     public Square[][] getMineField() {
         return minefield;
     }
@@ -127,5 +61,18 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         changed(); // from Model, sets changed flag and fires changed event
     }
 
-
+    class Square extends JLabel {
+        boolean hasMine, discovered, isExit; //Whether or not contains mine and whether or not person has stepped on.
+        int nearMines;
+        Square(boolean hasMine, boolean discovered, boolean isExit){
+            this.hasMine = hasMine;
+            this.discovered = discovered;
+            this.isExit = isExit;
+            this.nearMines = -1;
+        }
+        //Is needed?
+        public String toString(){
+            return "Has Mine: " + hasMine;
+        }
+    }
 }
