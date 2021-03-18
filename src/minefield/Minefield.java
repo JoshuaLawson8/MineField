@@ -21,7 +21,7 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         for(int i = 0; i < Mines; i++){
             int x = (int)(Math.random() * 20 );
             int y = (int)(Math.random() * 20 );
-            if(minefield[x][y].hasMine || (x == 0 && y ==0) || (x == 19 && y == 19)){ i--;}
+            if(minefield[x][y].hasMine || (x == 0 && y == 0) || (x == 19 && y == 19)){ i--;}
             else{minefield[x][y].hasMine = true;}
         }
         //setting entrance and exit
@@ -35,7 +35,7 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
             for(int j=0; j<minefield[i].length; j++){
                 System.out.print(minefield[i][j].hasMine ? "x " : "o ");
             }
-            System.out.println("\n");
+            System.out.println();
         }
     }
 
@@ -50,7 +50,17 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         System.out.print(nearMines);
     }
 
-    //do we ever need minefield?
+    public void showRevealedMines(){
+        for(int i =0; i < 20; i++){
+            for(int j =0; j < 20; j++){
+                findNearMines(i,j);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+
+    //do we ever need minefield outside?
     public Square[][] getMineField() {
         return minefield;
     }
