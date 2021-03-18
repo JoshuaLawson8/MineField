@@ -123,11 +123,10 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
             } else if (cmmd == "Help") {
                 Utilities.inform(af.getHelp());
             } else {
-
                 for(String s : af.getEditCommands()){
                     if(cmmd == s){
                         af.makeEditCommand(model,cmmd).execute();
-                        System.out.println("Change");
+                        //System.out.println("Change");
                     }
                 }
             }

@@ -30,7 +30,6 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
     }
 
     public void printAllMines(){
-        String txt = "";
         for(int i=0; i<minefield.length; i++){
             for(int j=0; j<minefield[i].length; j++){
                 System.out.print(minefield[i][j].hasMine ? "x " : "o ");
@@ -79,6 +78,10 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
             this.discovered = discovered;
             this.isExit = isExit;
             this.nearMines = -1;
+        }
+
+        public boolean hasMine(){
+            return hasMine;
         }
         //Is needed?
         public String toString(){
