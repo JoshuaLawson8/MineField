@@ -11,6 +11,7 @@ public class MinefieldView extends View {
 
     public MinefieldView(Minefield minefield){
         super(minefield);
+        setLayout(new GridLayout(20,20));
         Minefield mf = (Minefield) model;
         for(int i=0; i<mf.getMineField().length; i++){
             for(int j=0; j<mf.getMineField()[i].length; j++){
