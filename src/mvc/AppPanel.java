@@ -34,7 +34,6 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         add(controlPanel);
         add(view);
 
-        controlPanel.setBackground(Color.PINK);
         view.setBackground(Color.WHITE);
 
 
