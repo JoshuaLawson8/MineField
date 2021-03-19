@@ -33,8 +33,9 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         //setting entrance and exit
         minefield[0][0].discovered = true;
         minefield[0][0].setText(String.valueOf(minefield[0][0].nearMines));
-        minefield[0][0].setBackground(Color.white);
+        minefield[0][0].setBorder(BorderFactory.createLineBorder(Color.white));
         minefield[19][19].isExit = true;
+        minefield[19][19].setBorder(BorderFactory.createLineBorder(Color.green));
         userX = 0;
         userY = 0;
     }
@@ -83,7 +84,7 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         else if(heading == "SE"){userY++; userX++;}
         else if(heading == "SW"){userY++; userX--;}
         minefield[userX][userY].discovered = true;
-        minefield[userX][userY].setBackground(Color.white);
+        minefield[userX][userY].setBorder(BorderFactory.createLineBorder(Color.white));
         minefield[userX][userY].setText(String.valueOf(minefield[userX][userY].nearMines));
         changed(); // from Model, sets changed flag and fires changed event
     }

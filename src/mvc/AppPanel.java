@@ -84,18 +84,11 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                 os.writeObject(model);
                 os.close();
             } else if (cmmd == "Open") {
+                Boolean unsaved = true;
                 if (model.getUnsavedChanges()) {
-                    if (!Utilities.confirm("Open without saving?")) {
-                        String fName = Utilities.getFileName(null, true);
-                        ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
-                        //model.removePropertyChangeListener(this);
-                        model = (Model) is.readObject();
-                        //this.model.initSupport();
-                        //model.addPropertyChangeListener(this);
-                        view = af.makeView(model);
-                        is.close();
-                    }
-                } else {
+                    unsaved = !Utilities.confirm("Open without saving?");
+                }
+                if(unsaved){
                     String fName = Utilities.getFileName(null, true);
                     ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
                     //model.removePropertyChangeListener(this);
