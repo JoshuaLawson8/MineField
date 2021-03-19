@@ -8,24 +8,17 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 
 public class MinefieldView extends View {
-    Minefield mf;
+
+    private Minefield mf;
 
     public MinefieldView(Minefield minefield){
         super(minefield);
         setLayout(new GridLayout(20,20));
+        //We don't need to create a new minefield here, that's what the call to super does
         mf = (Minefield) model;
         for(int i=0; i<mf.getMineField().length; i++){
             for(int j=0; j<mf.getMineField()[i].length; j++){
-                if(mf.getMineField()[i][j].hasMine() == true){
-                    JLabel patch = new JLabel("x");
-                    patch.setBorder(BorderFactory.createLineBorder(Color.black));
-                    add(patch);
-                }
-                else{
-                    JLabel patch = new JLabel("o");
-                    patch.setBorder(BorderFactory.createLineBorder(Color.black));
-                    add(patch);
-                }
+                add(mf.getMineField()[i][j]);
             }
         }
     }

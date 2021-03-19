@@ -94,6 +94,8 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
             this.discovered = discovered;
             this.isExit = isExit;
             this.nearMines = -1;
+            setText("?");
+            setBorder(BorderFactory.createLineBorder(Color.black));
         }
 
         public boolean hasMine(){
@@ -103,5 +105,7 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         public String toString(){
             return "Has Mine: " + hasMine;
         }
+
+        public void setValue(String text){setText(text);}
     }
 }
