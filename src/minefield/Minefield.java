@@ -4,19 +4,16 @@ import mvc.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 
 public class Minefield extends Model { //The minefield is a 20x20 grid
 
     private Square[][] minefield;
-    Random rd = new Random();
     private Square user;
-    public Square getUser(){return user;}
 
     public Minefield(int Mines){
         minefield = new Square[20][20];
         for(int i=0; i<minefield.length; i++){
-            for(int j=0; j<minefield[i].length; j++){
+            for(int j=0; j<minefield[0].length; j++){
                 minefield[i][j] = new Square(false,false, false);
             }
         }
@@ -27,31 +24,32 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
             if(minefield[x][y].hasMine || (x == 0 && y == 0) || (x == 19 && y == 19)){ i--;}
             else{minefield[x][y].hasMine = true;}
         }
+        for(int i =0; i < minefield.length; i++){
+            for(int j =0; j < minefield[0].length; j++){
+                findNearMines(i,j);
+            }
+        }
         //setting entrance and exit
         minefield[0][0].discovered = true;
+        minefield[0][0].setText(String.valueOf(minefield[0][0].nearMines));
         minefield[19][19].isExit = true;
         user = minefield[0][0];
     }
 
-    public void printAllMines(){
-        for(int i=0; i<minefield.length; i++){
-            for(int j=0; j<minefield[i].length; j++){
-                System.out.print(minefield[i][j].hasMine ? "x " : "o ");
-            }
-            System.out.println();
-        }
-    }
-
     public void findNearMines(int xPos, int yPos){
-        int nearMines = 0;
+        int localMines = 0;
         for(int i = xPos-1; i < xPos+2; i++) {
             for (int j = yPos - 1; j < yPos + 2; j++) {
                 if (!(i == -1 || j == -1 || i == 20 || j == 20 || (i == xPos && j == yPos)))//check all boarders
-                    nearMines += minefield[i][j].hasMine ? 1 : 0;
+                    localMines += minefield[i][j].hasMine ? 1 : 0;
             }
         }
-        System.out.print(nearMines);
+        minefield[xPos][yPos].nearMines = localMines;
     }
+
+    public Square getUser(){return user;}
+
+    public Square[][] getMineField() { return minefield; }
 
     public void showRevealedMines(){
         for(int i =0; i < 20; i++){
@@ -63,15 +61,14 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         }
     }
 
-    //do we ever need minefield outside?
-    public Square[][] getMineField() {
-        return minefield;
+    public void printAllMines(){
+        for(int i=0; i<minefield.length; i++){
+            for(int j=0; j<minefield[i].length; j++){
+                System.out.print(minefield[i][j].hasMine ? "x " : "o ");
+            }
+            System.out.println();
+        }
     }
-    public Minefield getField(){
-        return this;
-    }
-
-    //public String toString() { return "stopLight.color = " + color; }
 
     public void change(String heading) {
 
@@ -87,25 +84,26 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
     }
 
     class Square extends JLabel {
-        boolean hasMine, discovered, isExit; //Whether or not contains mine and whether or not person has stepped on.
+
+        boolean hasMine, discovered, isExit;
         int nearMines;
+
         Square(boolean hasMine, boolean discovered, boolean isExit){
             this.hasMine = hasMine;
             this.discovered = discovered;
             this.isExit = isExit;
             this.nearMines = -1;
             setText("?");
+            setHorizontalAlignment(SwingConstants.CENTER);
             setBorder(BorderFactory.createLineBorder(Color.black));
+            setOpaque(true);
+            setBackground(Color.gray);
         }
 
-        public boolean hasMine(){
-            return hasMine;
-        }
-        //Is needed?
-        public String toString(){
-            return "Has Mine: " + hasMine;
-        }
+//        public String toString(){
+//            return "Has Mine: " + hasMine;
+//        }
 
-        public void setValue(String text){setText(text);}
     }
+
 }
