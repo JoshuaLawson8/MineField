@@ -8,7 +8,8 @@ import java.awt.*;
 public class Minefield extends Model { //The minefield is a 20x20 grid
 
     private Square[][] minefield;
-    private Square user;
+    private int userX;
+    private int userY;
 
     public Minefield(int Mines){
         minefield = new Square[20][20];
@@ -32,8 +33,10 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         //setting entrance and exit
         minefield[0][0].discovered = true;
         minefield[0][0].setText(String.valueOf(minefield[0][0].nearMines));
+        minefield[0][0].setBackground(Color.white);
         minefield[19][19].isExit = true;
-        user = minefield[0][0];
+        userX = 0;
+        userY = 0;
     }
 
     public void findNearMines(int xPos, int yPos){
@@ -47,7 +50,6 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         minefield[xPos][yPos].nearMines = localMines;
     }
 
-    public Square getUser(){return user;}
 
     public Square[][] getMineField() { return minefield; }
 
@@ -72,14 +74,17 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
 
     public void change(String heading) {
 
-        if(heading == "N"){ user = minefield[user.getX()][user.getY()-1];}
-        else if(heading == "E"){ user = minefield[user.getX()+1][user.getY()];}
-        else if(heading == "S"){ user = minefield[user.getX()][user.getY()+1];}
-        else if(heading == "W"){ user = minefield[user.getX()-1][user.getY()];}
-        else if(heading == "NE"){ user = minefield[user.getX()+1][user.getY()-1];}
-        else if(heading == "NW"){ user = minefield[user.getX()-1][user.getY()-1];}
-        else if(heading == "SE"){ user = minefield[user.getX()+1][user.getY()+1];}
-        else if(heading == "SW"){ user = minefield[user.getX()-1][user.getY()+1];}
+        if(heading == "N"){userX--;}
+        else if(heading == "E"){userY++;}
+        else if(heading == "S"){userX++;}
+        else if(heading == "W"){userY--;}
+        else if(heading == "NE"){userY--; userX++;}
+        else if(heading == "NW"){userY--; userX--;}
+        else if(heading == "SE"){userY++; userX++;}
+        else if(heading == "SW"){userY++; userX--;}
+        minefield[userX][userY].discovered = true;
+        minefield[userX][userY].setBackground(Color.white);
+        minefield[userX][userY].setText(String.valueOf(minefield[userX][userY].nearMines));
         changed(); // from Model, sets changed flag and fires changed event
     }
 
