@@ -5,6 +5,7 @@ import tools.Utilities;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.VetoableChangeListener;
 
 public class Minefield extends Model { //The minefield is a 20x20 grid
 
@@ -57,16 +58,20 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
 
     public void checkGameStatus(){
         //System.out.println("checking status");
-        if(minefield[userX][userY].hasMine){ //Steps on mine lose game
-            System.out.println("Game over!");
-            if(!Utilities.confirm("You lost! New Game?")){
-                System.out.println("Create new game");
+        try {
+            if (minefield[userX][userY].hasMine) { //Steps on mine lose game
+                System.out.println("Game over!");
+                if (!Utilities.confirm("You lost! New Game?")) {
+                    System.out.println("Create new game");
+                }
+            } else if (minefield[userX][userY].isExit) { //Gets to exit
+                if (!Utilities.confirm("You Win! New Game?")) {
+                    System.out.println("Create new game");
+                }
             }
-        }
-        else if(minefield[userX][userY].isExit){ //Gets to exit
-            if(!Utilities.confirm("You Win! New Game?")){
-                System.out.println("Create new game");
-            }
+        }catch (ArrayIndexOutOfBoundsException e ){
+            Utilities.inform("You went out of Bounds, Try again, from Start");
+            userY=0;userX=0;
         }
     }
 
@@ -95,14 +100,16 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
 
     public void change(String heading) {
 
-        if(heading == "N"){userX--;}
-        else if(heading == "E"){userY++;}
-        else if(heading == "S"){userX++;}
-        else if(heading == "W"){userY--;}
-        else if(heading == "NE"){userY++; userX--;}
-        else if(heading == "NW"){userY--; userX--;}
-        else if(heading == "SE"){userY++; userX++;}
-        else if(heading == "SW"){userY--; userX++;}
+            switch (heading) {
+                case "S": userX++;break;
+                case "W": userY--;break;
+                case "E": userY++;break;
+                case "N": userX--;break;
+                case "NW": userY--;userX--;break;
+                case "NE": userY++;userX--;break;
+                case "SW": userY--;userX++;break;
+                case "SE": userY++;userX++;break;
+            }
         checkGameStatus();
         /*minefield[userX][userY].discovered = true;
         minefield[userX][userY].setBorder(BorderFactory.createLineBorder(Color.white));

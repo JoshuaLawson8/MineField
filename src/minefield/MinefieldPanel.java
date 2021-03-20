@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class MinefieldPanel extends AppPanel{
 
-
         public MinefieldPanel(AppFactory factory) {
             super(factory);
             String[] buttonNames = {"NW","N","NE","W","","E","SW","S","SE"};
