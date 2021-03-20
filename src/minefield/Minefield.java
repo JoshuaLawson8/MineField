@@ -1,6 +1,7 @@
 package minefield;
 
 import mvc.*;
+import tools.Utilities;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,6 +55,21 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
 
     public Square[][] getMineField() { return minefield; }
 
+    public void checkGameStatus(){
+        //System.out.println("checking status");
+        if(minefield[userX][userY].hasMine){ //Steps on mine lose game
+            System.out.println("Game over!");
+            if(!Utilities.confirm("You lost! New Game?")){
+                System.out.println("Create new game");
+            }
+        }
+        else if(minefield[userX][userY].isExit){ //Gets to exit
+            if(!Utilities.confirm("You Win! New Game?")){
+                System.out.println("Create new game");
+            }
+        }
+    }
+
     public void showRevealedMines(){
         for(int i =0; i < 20; i++){
             for(int j =0; j < 20; j++){
@@ -87,6 +103,7 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         else if(heading == "NW"){userY--; userX--;}
         else if(heading == "SE"){userY++; userX++;}
         else if(heading == "SW"){userY--; userX++;}
+        checkGameStatus();
         /*minefield[userX][userY].discovered = true;
         minefield[userX][userY].setBorder(BorderFactory.createLineBorder(Color.white));
         minefield[userX][userY].setText(String.valueOf(minefield[userX][userY].nearMines));*/
