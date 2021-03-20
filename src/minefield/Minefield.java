@@ -64,6 +64,10 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         }
     }
 
+    public Square getUser(){
+        return minefield[userX][userY];
+    }
+
     public void printAllMines(){
         for(int i=0; i<minefield.length; i++){
             for(int j=0; j<minefield[i].length; j++){
@@ -79,14 +83,14 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         else if(heading == "E"){userY++;}
         else if(heading == "S"){userX++;}
         else if(heading == "W"){userY--;}
-        else if(heading == "NE"){userY--; userX++;}
+        else if(heading == "NE"){userY++; userX--;}
         else if(heading == "NW"){userY--; userX--;}
         else if(heading == "SE"){userY++; userX++;}
-        else if(heading == "SW"){userY++; userX--;}
-        minefield[userX][userY].discovered = true;
+        else if(heading == "SW"){userY--; userX++;}
+        /*minefield[userX][userY].discovered = true;
         minefield[userX][userY].setBorder(BorderFactory.createLineBorder(Color.white));
-        minefield[userX][userY].setText(String.valueOf(minefield[userX][userY].nearMines));
-       // changed(); // from Model, sets changed flag and fires changed event
+        minefield[userX][userY].setText(String.valueOf(minefield[userX][userY].nearMines));*/
+        changed(); // from Model, sets changed flag and fires changed event
     }
 
     class Square extends JLabel {

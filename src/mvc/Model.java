@@ -23,9 +23,8 @@ public abstract class Model extends Bean{
     }
 
     public void changed(){
-        boolean oldStatus = unsavedChanges;
         unsavedChanges = true;
-        firePropertyChange(null, null, null);
-        System.out.println("changed");
+        firePropertyChange("saved", false, unsavedChanges);
+        //System.out.println("changed");
     }
 }

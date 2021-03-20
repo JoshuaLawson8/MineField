@@ -21,7 +21,6 @@ public class View extends JPanel implements PropertyChangeListener {
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("pchange");
         repaint();
     }
 }
