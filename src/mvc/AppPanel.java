@@ -36,8 +36,6 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 
         view.setBackground(Color.WHITE);
 
-
-
         frame = new JFrame();
         Container cp = frame.getContentPane();
         cp.add(this);

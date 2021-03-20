@@ -86,7 +86,7 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         minefield[userX][userY].discovered = true;
         minefield[userX][userY].setBorder(BorderFactory.createLineBorder(Color.white));
         minefield[userX][userY].setText(String.valueOf(minefield[userX][userY].nearMines));
-        changed(); // from Model, sets changed flag and fires changed event
+       // changed(); // from Model, sets changed flag and fires changed event
     }
 
     class Square extends JLabel {

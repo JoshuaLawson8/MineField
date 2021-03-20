@@ -22,6 +22,8 @@ public class MinefieldView extends View {
         }
     }
 
+
+
     @Override
     public void propertyChange(PropertyChangeEvent evt){
         /*int label = mf.getUser().nearMines;
@@ -29,7 +31,7 @@ public class MinefieldView extends View {
         patch.setBorder(BorderFactory.createLineBorder(Color.white));
         add(patch);
         System.out.println("pchanged");*/
-        repaint();
+        //repaint();
 
     }
 }
