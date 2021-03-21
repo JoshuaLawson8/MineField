@@ -12,8 +12,10 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
     private Square[][] minefield;
     private int userX;
     private int userY;
-
+    private int oldX;
+    private int oldY;
     public Minefield(int Mines){
+
         minefield = new Square[20][20];
         for(int i=0; i<minefield.length; i++){
             for(int j=0; j<minefield[0].length; j++){
@@ -70,8 +72,9 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
                 }
             }
         }catch (ArrayIndexOutOfBoundsException e ){
-            Utilities.inform("You went out of Bounds, Try again, from Start");
-            userY=0;userX=0;
+            Utilities.inform("Out of Bounds! Go a different direction");
+            userX = oldX;
+            userY = oldY;
         }
     }
 
@@ -99,17 +102,18 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
     }
 
     public void change(String heading) {
-
-            switch (heading) {
-                case "S": userX++;break;
-                case "W": userY--;break;
-                case "E": userY++;break;
-                case "N": userX--;break;
-                case "NW": userY--;userX--;break;
-                case "NE": userY++;userX--;break;
-                case "SW": userY--;userX++;break;
-                case "SE": userY++;userX++;break;
-            }
+        oldX = userX;
+        oldY = userY;
+        switch (heading) {
+            case "S": userX++;break;
+            case "W": userY--;break;
+            case "E": userY++;break;
+            case "N": userX--;break;
+            case "NW": userY--;userX--;break;
+            case "NE": userY++;userX--;break;
+            case "SW": userY--;userX++;break;
+            case "SE": userY++;userX++;break;
+        }
         checkGameStatus();
         /*minefield[userX][userY].discovered = true;
         minefield[userX][userY].setBorder(BorderFactory.createLineBorder(Color.white));
@@ -133,11 +137,6 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
             setOpaque(true);
             setBackground(Color.gray);
         }
-
-//        public String toString(){
-//            return "Has Mine: " + hasMine;
-//        }
-
     }
 
 }
