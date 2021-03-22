@@ -12,22 +12,22 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.*;
-//aaaa
+
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private Model model;
-    private View view;
-    private AppFactory af;
+    protected Model model;
+    protected View view;
     protected JPanel controlPanel;
+    protected AppFactory af;
 
     private JFrame frame;
     public static int FRAME_WIDTH = 500;
     public static int FRAME_HEIGHT = 300;
-    public AppPanel(AppFactory factory) {
-        controlPanel = new JPanel();
 
+    public AppPanel(AppFactory factory) {
         af = factory;
         model = af.makeModel();
+        controlPanel = new JPanel();
         view = af.makeView(model);
 
         setLayout((new GridLayout(1, 2)));
@@ -64,16 +64,17 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
         return result;
     }
 
-    public void display() { frame.setVisible(true); }
-
-    public void propertyChange(PropertyChangeEvent pe){
-
+    public void display() {
+        frame.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent ae) {
-        String cmmd = ae.getActionCommand();
+    @Override
+    public void propertyChange(PropertyChangeEvent evt){}
 
-        try {
+    public void actionPerformed(ActionEvent ae) {
+        try{
+            String cmmd = ae.getActionCommand();
+
             if (cmmd == "Save") {
                 model.setUnsavedChanges(false);
                 //String fName = Utilities.ask("File Name?");
@@ -93,12 +94,12 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     model = (Model) is.readObject();
                     //this.model.initSupport();
                     //model.addPropertyChangeListener(this);
-                    view = af.makeView(model);
+                    view.setModel(model);
                     is.close();
                 }
             } else if (cmmd == "New") {
                 model = af.makeModel();
-                view = af.makeView(model);
+                view.setModel(model);
             } else if (cmmd == "Quit") {
                 //Utilities.saveChanges(model);
                 if (model.getUnsavedChanges()) {
@@ -116,13 +117,14 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                 for(String s : af.getEditCommands()){
                     if(cmmd == s){
                         af.makeEditCommand(model,cmmd).execute();
-                        //System.out.println("Change");
                     }
                 }
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             handleException(e);
         }
+        revalidate();
+        repaint();
     }
 
     protected void handleException(Exception e){
