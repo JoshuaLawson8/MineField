@@ -12,7 +12,7 @@ public class MinefieldFactory implements AppFactory {
 
     public Command makeEditCommand(Model model, String type) {
         for( String s : getEditCommands()){
-            if (type == s){ return new MineCommand(model,s); }
+            if (type.equals(s)){ return new MineCommand(model,s); }
         }
         return null;
     }

@@ -5,8 +5,6 @@ import mvc.AppPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
 
 public class MinefieldPanel extends AppPanel{
 

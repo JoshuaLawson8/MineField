@@ -3,10 +3,6 @@ package minefield;
 import mvc.*;
 import tools.Utilities;
 
-import javax.swing.*;
-import java.awt.*;
-import java.beans.VetoableChangeListener;
-
 public class Minefield extends Model{ //The minefield is a 20x20 grid
 
     private Square[][] minefield;
@@ -39,7 +35,7 @@ public class Minefield extends Model{ //The minefield is a 20x20 grid
         minefield[19][19].isExit = true;
     }
 
-    public void findNearMines(int xPos, int yPos){
+    private void findNearMines(int xPos, int yPos){
         int localMines = 0;
         for(int i = xPos-1; i < xPos+2; i++) {
             for (int j = yPos - 1; j < yPos + 2; j++) {
@@ -50,7 +46,7 @@ public class Minefield extends Model{ //The minefield is a 20x20 grid
         minefield[xPos][yPos].nearMines = localMines;
     }
 
-    public void changeState(String heading) {
+    void changeState(String heading) {
         switch (heading) {
             case "S": userX++;break;
             case "W": userY--;break;
@@ -82,9 +78,9 @@ public class Minefield extends Model{ //The minefield is a 20x20 grid
         }
     }
 
-    public Square[][] getMinefield(){return minefield;}
-    public int userX(){return userX;}
-    public int userY(){return userY;}
+    Square[][] getMinefield(){return minefield;}
+    int userX(){return userX;}
+    int userY(){return userY;}
 
     class Square {
 
