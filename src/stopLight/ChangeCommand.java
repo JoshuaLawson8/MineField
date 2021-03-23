@@ -1,7 +1,6 @@
 package stopLight;
 
-import mvc.Model;
-import mvc.Command;
+import mvc.*;
 
 public class ChangeCommand extends Command {
 
@@ -13,4 +12,5 @@ public class ChangeCommand extends Command {
         Stoplight light = (Stoplight)model;
         light.change();
     }
+
 }

@@ -1,7 +1,6 @@
 package stopLight;
 
 import mvc.*;
-import mvc.Model;
 
 public class StoplightFactory implements AppFactory {
 
@@ -13,7 +12,8 @@ public class StoplightFactory implements AppFactory {
 
     public String[] getEditCommands() { return new String[] {"Change"}; }
 
-    public Command makeEditCommand(Model model, String type) {
+    // source added 3/15 to support text fields
+    public Command makeEditCommand(Model model, String type, Object source) {
         if (type == "Change")
             return new ChangeCommand(model);
         return null;

@@ -10,13 +10,11 @@ public class StoplightView extends View {
     }
 
     public void paintComponent(Graphics gc) {
-        System.out.println("propertychange");
         super.paintComponent(gc);
         Stoplight light = (Stoplight)model;
         Color oldColor = gc.getColor();
         gc.setColor(light.getColor());
         gc.fillOval(100, 100, 20, 20);
         gc.setColor(oldColor);
-        //System.out.println("Drawing");
     }
 }
