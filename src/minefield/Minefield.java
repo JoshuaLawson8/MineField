@@ -7,11 +7,13 @@ public class Minefield extends Model{ //The minefield is a 20x20 grid
 
     private Square[][] minefield;
     private int userX,userY;
+    private boolean gameOver;
     public Minefield(int Mines){
 
         minefield = new Square[20][20];
         userX = 0;
         userY = 0;
+        gameOver = false;
 
         for(int i=0; i<minefield.length; i++){
             for(int j=0; j<minefield[0].length; j++){
@@ -47,35 +49,46 @@ public class Minefield extends Model{ //The minefield is a 20x20 grid
     }
 
     void changeState(String heading) {
-        switch (heading) {
-            case "S": userX++;break;
-            case "W": userY--;break;
-            case "E": userY++;break;
-            case "N": userX--;break;
-            case "NW": userY--;userX--;break;
-            case "NE": userY++;userX--;break;
-            case "SW": userY--;userX++;break;
-            case "SE": userY++;userX++;break;
-        }
-        try{
-            minefield[userX][userY].discovered = true;
-        }catch(Exception e){
+        if(!gameOver){
             switch (heading) {
-                case "S": userX--;break;
-                case "W": userY++;break;
-                case "E": userY--;break;
-                case "N": userX++;break;
-                case "NW": userY++;userX++;break;
-                case "NE": userY--;userX++;break;
-                case "SW": userY++;userX--;break;
-                case "SE": userY--;userX--;break;
+                case "S": userX++;break;
+                case "W": userY--;break;
+                case "E": userY++;break;
+                case "N": userX--;break;
+                case "NW": userY--;userX--;break;
+                case "NE": userY++;userX--;break;
+                case "SW": userY--;userX++;break;
+                case "SE": userY++;userX++;break;
             }
-            Utilities.error("Out of bounds");
+            try{
+                minefield[userX][userY].discovered = true;
+            }catch(Exception e){
+                switch (heading) {
+                    case "S": userX--;break;
+                    case "W": userY++;break;
+                    case "E": userY--;break;
+                    case "N": userX++;break;
+                    case "NW": userY++;userX++;break;
+                    case "NE": userY--;userX++;break;
+                    case "SW": userY++;userX--;break;
+                    case "SE": userY--;userX--;break;
+                }
+                Utilities.error("Out of bounds");
+            }
+            if(minefield[userX][userY].hasMine){
+                Utilities.error("Stepped on mine–Gameover!");
+                gameOver = true;
+            }
+            if(minefield[userX][userY].isExit){
+                Utilities.inform("You win!!");
+                gameOver = true;
+            }
+            changed(); // from Model, sets changed flag and fires changed event
         }
-        changed(); // from Model, sets changed flag and fires changed event
-        if(minefield[userX][userY].hasMine){
-            Utilities.error("Stepped on mine");
+        else{
+            Utilities.inform("Gameover! Start a new game");
         }
+
     }
 
     Square[][] getMinefield(){return minefield;}
