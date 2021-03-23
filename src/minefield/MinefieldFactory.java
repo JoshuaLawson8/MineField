@@ -10,7 +10,7 @@ public class MinefieldFactory implements AppFactory {
 
     public String[] getEditCommands() { return new String[]{"NW","N","NE","W","E","SW","S","SE"}; }
 
-    public Command makeEditCommand(Model model, String type) {
+    public Command makeEditCommand(Model model, String type,Object Source) {
         for( String s : getEditCommands()){
             if (type.equals(s)){ return new MineCommand(model,s); }
         }

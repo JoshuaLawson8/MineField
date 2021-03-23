@@ -94,6 +94,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
                     //this.model.initSupport();
                     //model.addPropertyChangeListener(this);
                     view.setModel(model);
+                    model.changed();
                     is.close();
                 }
             } else if (cmmd == "New") {
@@ -116,7 +117,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
             } else {
                 for(String s : af.getEditCommands()){
                     if(cmmd == s){
-                        af.makeEditCommand(model,cmmd).execute();
+                        af.makeEditCommand(model,cmmd,null).execute();
                     }
                 }
             }
