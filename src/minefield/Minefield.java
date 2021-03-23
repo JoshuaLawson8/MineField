@@ -1,7 +1,8 @@
 package minefield;
 
 import mvc.*;
-import tools.Utilities;
+import tools.*;
+import java.io.Serializable;
 
 public class Minefield extends Model{ //The minefield is a 20x20 grid
 
@@ -95,7 +96,7 @@ public class Minefield extends Model{ //The minefield is a 20x20 grid
     int userX(){return userX;}
     int userY(){return userY;}
 
-    class Square {
+    class Square implements Serializable{
 
         boolean hasMine, discovered, isExit;
         int nearMines;
