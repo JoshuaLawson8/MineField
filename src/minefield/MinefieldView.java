@@ -1,5 +1,6 @@
 package minefield;
 
+import mvc.Model;
 import mvc.View;
 import stopLight.Stoplight;
 
@@ -9,34 +10,52 @@ import java.beans.PropertyChangeEvent;
 
 public class MinefieldView extends View {
 
-    private Minefield mf;
 
     public MinefieldView(Minefield minefield){
         super(minefield);
-        setLayout(new GridLayout(20,20));
-        mf = (Minefield) model;
-        for(int i=0; i<mf.getMineField().length; i++){
-            for(int j=0; j<mf.getMineField()[i].length; j++){
-                add(mf.getMineField()[i][j]);
-            }
-        }
+        propertyChange(null);//This needs to be fixed
     }
-
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt){
-        mf.getUser().discovered = true;
-        mf.getUser().setBorder(BorderFactory.createLineBorder(Color.white));
-        if(mf.getUser().hasMine){
-            mf.getUser().setText("M");
+        removeAll();
+        setLayout(new GridLayout(20,20));
+        Minefield mf = (Minefield) model;
+        for(int i=0; i<mf.getMineField().length; i++){
+            for(int j=0; j<mf.getMineField()[i].length; j++){
+
+                JLabel current = new JLabel();
+                current.setHorizontalAlignment(SwingConstants.CENTER);
+                current.setOpaque(true);
+                current.setBackground(Color.gray);
+
+                if(mf.getMineField()[i][j].discovered){
+                    if(mf.getMineField()[i][j].hasMine){
+                        current.setBorder(BorderFactory.createLineBorder(Color.pink));
+                        current.setBackground(Color.pink);
+                        current.setText("M");
+                    }
+                    else if(!mf.getMineField()[i][j].isExit){
+                        current.setBorder(BorderFactory.createLineBorder(Color.white));
+                        current.setText(String.valueOf(mf.getMineField()[i][j].nearMines));
+                    }
+                    else{
+                        current.setBorder(BorderFactory.createLineBorder(Color.orange));
+                        current.setBackground(Color.orange);
+                        current.setText("W");
+                    }
+                }
+                else if(mf.getMineField()[i][j].isExit){
+                    current.setBorder(BorderFactory.createLineBorder(Color.green));
+                    current.setText("E");
+                }
+                else{
+                    current.setBorder(BorderFactory.createLineBorder(Color.black));
+                    current.setText("?");
+                }
+                add(current);
+            }
         }
-        else{
-            mf.getUser().setText(String.valueOf(mf.getUser().nearMines));
-        }
-        /*int label = mf.getUser().nearMines;
-        JLabel patch = new JLabel(String.valueOf(label));
-        patch.setBorder(BorderFactory.createLineBorder(Color.white));
-        add(patch);*/
+
     }
 }

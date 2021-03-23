@@ -5,6 +5,8 @@ import mvc.AppPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
 
 public class MinefieldPanel extends AppPanel{
 
@@ -18,6 +20,7 @@ public class MinefieldPanel extends AppPanel{
                 controlPanel.add(current);
             }
             controlPanel.setLayout(new FlowLayout());
+            //view.changed()
         }
 
         public static void main(String[] args) {
@@ -25,5 +28,4 @@ public class MinefieldPanel extends AppPanel{
             AppPanel panel = new MinefieldPanel(factory);
             panel.display();
         }
-
 }
