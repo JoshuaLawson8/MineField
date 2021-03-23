@@ -10,7 +10,7 @@ public class MineCommand extends Command{
 
     public void execute(){
         Minefield field = (Minefield)model;
-        field.change(heading);
+        field.changeState(heading);
     }
 }
 
