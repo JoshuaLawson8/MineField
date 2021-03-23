@@ -7,14 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.VetoableChangeListener;
 
-public class Minefield extends Model { //The minefield is a 20x20 grid
+public class Minefield extends Model{ //The minefield is a 20x20 grid
 
     private Square[][] minefield;
-    private int userX,userY,oldX,oldY;
-    private boolean isGameOver;
+    private int userX,userY;
     public Minefield(int Mines){
-        isGameOver = false;
+
         minefield = new Square[20][20];
+        userX = 0;
+        userY = 0;
+
         for(int i=0; i<minefield.length; i++){
             for(int j=0; j<minefield[0].length; j++){
                 minefield[i][j] = new Square(false,false, false);
@@ -35,8 +37,6 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         //setting entrance and exit
         minefield[0][0].discovered = true;
         minefield[19][19].isExit = true;
-        userX = 0;
-        userY = 0;
     }
 
     public void findNearMines(int xPos, int yPos){
@@ -50,75 +50,41 @@ public class Minefield extends Model { //The minefield is a 20x20 grid
         minefield[xPos][yPos].nearMines = localMines;
     }
 
-
-    public Square[][] getMineField() { return minefield; }
-
-    public void checkGameStatus(){
-        //System.out.println("checking status");
-        try {
-            if (minefield[userX][userY].hasMine) { //Steps on mine lose game
-                isGameOver = true;
-                if (!Utilities.confirm("You lost! New Game?")) {
-                    System.out.println("Create new game");
-                }
-            } else if (minefield[userX][userY].isExit) { //Gets to exit
-                isGameOver = true;
-                if (!Utilities.confirm("You Win! New Game?")) {
-                    System.out.println("Create new game");
-                }
-            }
-        }catch (ArrayIndexOutOfBoundsException e ){
-            Utilities.inform("Out of Bounds! Go a different direction");
-            userX = oldX;
-            userY = oldY;
+    public void changeState(String heading) {
+        switch (heading) {
+            case "S": userX++;break;
+            case "W": userY--;break;
+            case "E": userY++;break;
+            case "N": userX--;break;
+            case "NW": userY--;userX--;break;
+            case "NE": userY++;userX--;break;
+            case "SW": userY--;userX++;break;
+            case "SE": userY++;userX++;break;
         }
-    }
-
-    public void showRevealedMines(){
-        for(int i =0; i < 20; i++){
-            for(int j =0; j < 20; j++){
-                findNearMines(i,j);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
-
-    public Square getUser(){
-        return minefield[userX][userY];
-    }
-
-    public void printAllMines(){
-        for(int i=0; i<minefield.length; i++){
-            for(int j=0; j<minefield[i].length; j++){
-                System.out.print(minefield[i][j].hasMine ? "x " : "o ");
-            }
-            System.out.println();
-        }
-    }
-
-    public void change(String heading) {
-        oldX = userX;
-        oldY = userY;
-        if(!isGameOver){
+        try{
+            minefield[userX][userY].discovered = true;
+        }catch(Exception e){
             switch (heading) {
-                case "S": userX++;break;
-                case "W": userY--;break;
-                case "E": userY++;break;
-                case "N": userX--;break;
-                case "NW": userY--;userX--;break;
-                case "NE": userY++;userX--;break;
-                case "SW": userY--;userX++;break;
-                case "SE": userY++;userX++;break;
+                case "S": userX--;break;
+                case "W": userY++;break;
+                case "E": userY--;break;
+                case "N": userX++;break;
+                case "NW": userY++;userX++;break;
+                case "NE": userY--;userX++;break;
+                case "SW": userY++;userX--;break;
+                case "SE": userY--;userX--;break;
             }
+            Utilities.error("Out of bounds");
         }
-        else{
-            Utilities.inform("Games over! Start new game");
-        }
-        minefield[userX][userY].discovered = true;
-        checkGameStatus();
         changed(); // from Model, sets changed flag and fires changed event
+        if(minefield[userX][userY].hasMine){
+            Utilities.error("Stepped on mine");
+        }
     }
+
+    public Square[][] getMinefield(){return minefield;}
+    public int userX(){return userX;}
+    public int userY(){return userY;}
 
     class Square {
 
