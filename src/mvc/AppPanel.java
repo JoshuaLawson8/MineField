@@ -1,16 +1,12 @@
 package mvc;
 
+import minefield.Minefield;
 import tools.Utilities;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.event.*;
+import java.beans.*;
+import java.io.*;
 import javax.swing.*;
 
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
@@ -27,6 +23,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
     public AppPanel(AppFactory factory) {
         af = factory;
         model = af.makeModel();
+        addPropertyChangeListener(this);
         controlPanel = new JPanel();
         view = af.makeView(model);
 
@@ -69,7 +66,9 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt){}
+    public void propertyChange(PropertyChangeEvent evt){
+
+    }
 
     public void actionPerformed(ActionEvent ae) {
         try{
@@ -100,6 +99,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
             } else if (cmmd == "New") {
                 model = af.makeModel();
                 view.setModel(model);
+                model.changed();
             } else if (cmmd == "Quit") {
                 //Utilities.saveChanges(model);
                 if (model.getUnsavedChanges()) {
